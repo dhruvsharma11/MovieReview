@@ -199,7 +199,6 @@ const Review = () => {
                 <Grid item xs={12} justifyContent="center" align="center">
                   <Typography variant="h6" color="green">
                     Your review has been received!
-                    
                   </Typography>
                 </Grid>
                 <Grid
