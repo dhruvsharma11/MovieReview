@@ -180,7 +180,7 @@ const Review = () => {
         <Grid
           container
           item
-          xs={6}
+          xs={12}
           justifyContent="center"
           align="center"
           spacing={5}
