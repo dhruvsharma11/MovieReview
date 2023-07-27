@@ -113,7 +113,7 @@ app.post("/api/getMovies", (req, res) => {
 		movieData.push('%' + directorName + '%');
 	}
 
-	sql = sql + `GROUP BY M.name,  D.first_name, D.last_name`;
+	sql = sql + ` GROUP BY M.name,  D.first_name, D.last_name`;
   
 	connection.query(sql, movieData, (error, results, fields) => {
 	  if (error) {
@@ -126,6 +126,29 @@ app.post("/api/getMovies", (req, res) => {
 
 	connection.end();
   });
+
+
+  app.post('/api/loadTrailer', (req, res) => {
+
+	let connection = mysql.createConnection(config);
+
+	let data=[req.body.embedURL, req.body.movieID]
+
+
+
+
+	let sql = `UPDATE movies SET movie_trailers = ? WHERE ID = ?;`;
+
+	if (data[0]) {
+		connection.query(sql, data, (error, results, fields) => {
+			if (error) {
+				return console.error(error.message);
+			}
+		});
+		connection.end();
+	}
+});
+  
 
 
 app.post('/api/loadUserSettings', (req, res) => {

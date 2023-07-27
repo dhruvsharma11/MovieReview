@@ -10,8 +10,9 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/material/Menu";
 
 import { useNavigate } from "react-router-dom";
+import MyPage from "./MyPage";
 
-const MyPage = () => {
+const App = () => {
   const navigate = useNavigate();
 
   return (
@@ -59,8 +60,9 @@ const MyPage = () => {
             </Toolbar>
           </AppBar>
         </Box>
+        <MyPage />
     </div>
   );
 };
 
-export default MyPage;
+export default App;
