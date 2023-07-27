@@ -20,14 +20,7 @@ const Landing = () => {
           <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ backgroundColor: "#292828" }}>
               <Toolbar>
-                {/* App Title and Subtitle */}
-                <Box sx={{ display: "flex", alignItems: "center", marginRight: 16 }}>
-                  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    CritiCinema
-                  </Typography>
-                </Box>
 
-                {/* Links to other pages */}
                 <Link onClick={() => navigate("/")} underline="none" color="inherit" sx={{ margin: 2 }}>
                   <Typography variant="h6" component="div">
                     Landing

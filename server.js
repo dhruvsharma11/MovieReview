@@ -75,6 +75,58 @@ app.post("/api/getMovies", (req, res) => {
 	});
   });
 
+  app.post("/api/findMovieData", (req, res) => {
+
+	let connection = mysql.createConnection(config);
+  
+	let movieTitle = req.body.enteredMovie;
+	let actorName = req.body.enteredActor
+	let directorName = req.body.enteredDirector
+
+
+	let sql = `SELECT DISTINCT M.name, CONCAT(D.first_name, ' ', D.last_name) AS director_names, GROUP_CONCAT(DISTINCT R.reviewContent) as reviewContent, AVG(R.reviewScore) as reviewAverage
+	FROM movies M
+	LEFT JOIN Review R ON M.id = R.movieID
+	LEFT JOIN movies_directors MD ON MD.movie_id = M.id
+	LEFT JOIN directors D ON D.id = MD.director_id
+	LEFT JOIN roles RO ON RO.movie_id = M.id
+	LEFT JOIN actors A ON A.id = RO.actor_id
+	WHERE 1`;
+
+  
+	let movieData = [];
+  
+	// console.log(movieData);
+
+	if (movieTitle) {
+		sql = sql + ` AND M.name LIKE ?`;
+		movieData.push('%' + movieTitle + '%');
+	}
+
+	if (actorName) {
+		sql = sql + ` AND CONCAT(A.first_name, " ", A.last_name) LIKE ?`;
+		movieData.push('%' + actorName + '%');
+	}
+
+	if (directorName) {
+		sql = sql + ` AND CONCAT(D.first_name, " ", D.last_name) LIKE ?`;
+		movieData.push('%' + directorName + '%');
+	}
+
+	sql = sql + `GROUP BY M.name,  D.first_name, D.last_name`;
+  
+	connection.query(sql, movieData, (error, results, fields) => {
+	  if (error) {
+		return console.error(error.message);
+	  }
+	  let string = JSON.stringify(results);
+		console.log(string);
+	  res.send({ express: string });
+	});
+
+	connection.end();
+  });
+
 
 app.post('/api/loadUserSettings', (req, res) => {
 
@@ -82,9 +134,9 @@ app.post('/api/loadUserSettings', (req, res) => {
 	let userID = req.body.userID;
 
 	let sql = `SELECT mode FROM user WHERE userID = ?`;
-	console.log(sql);
+	// console.log(sql);
 	let data = [userID];
-	console.log(data);
+	// console.log(data);
 
 	connection.query(sql, data, (error, results, fields) => {
 		if (error) {
