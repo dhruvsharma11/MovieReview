@@ -100,7 +100,7 @@ const Review = () => {
   return (
     <Box
       sx={{
-        minHeight: "100vh", // Set the height of the parent container to fill the viewport
+        minHeight: "100vh", 
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

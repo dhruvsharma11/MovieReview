@@ -37,10 +37,6 @@ const Search = () => {
     });
   };
 
-  // React.useEffect(() => {
-  //   getMovies();
-  // }, []);
-
   const callApiFindMovieData = async () => {
     const url = serverURL + "/api/findMovieData";
 
@@ -102,7 +98,7 @@ const Search = () => {
             Submit
           </Button>
         </Grid>
-        {/* Movie Data Section */}
+
         <Grid container item xs={12} spacing={2}>
           {movieData.map((movie) => (
             <Grid item xs={12} key={movie.id}>

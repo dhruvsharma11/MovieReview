@@ -1,5 +1,5 @@
 import * as React from "react";
-//import all necessary libraries here, e.g., Material-UI Typography, as follows
+
 import {
   FormControl,
   FormLabel,
@@ -9,9 +9,6 @@ import {
 } from "@mui/material";
 
 const ReviewRating = ((props) => {
-  //states declarations
-  //constants and functions declarations
-
 
   return (
     <FormControl>

@@ -29,9 +29,9 @@ app.post("/api/getMovies", (req, res) => {
 	  }
   
 	  let string = JSON.stringify(results);
-	  let obj = JSON.parse(string)
+	  
 	//   console.log(obj + " is the object from server.js");
-	  res.send(obj);
+	  res.send({express: string});
 	});
 	connection.end();
   });
@@ -61,13 +61,13 @@ app.post("/api/getMovies", (req, res) => {
   
 		if (errorsInTransaction > 0) {
 		  connection.query('ROLLBACK', data, (error, results, fields) => {
-			res.send('error')
+			console.log("error")
 			connection.end();
 		  })
 		}
 		else {
 		  connection.query('COMMIT', data, (error, results, fields) => {
-			res.send('success')
+			console.log("success")
 			connection.end();
 		  })
 		}
@@ -133,9 +133,6 @@ app.post("/api/getMovies", (req, res) => {
 	let connection = mysql.createConnection(config);
 
 	let data=[req.body.embedURL, req.body.movieID]
-
-
-
 
 	let sql = `UPDATE movies SET movie_trailers = ? WHERE ID = ?;`;
 

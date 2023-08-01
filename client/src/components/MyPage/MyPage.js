@@ -6,11 +6,16 @@ import InsertTrailer from "./InsertTrailer";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+
+
+const backgroundImage =
+  "https://coolbackgrounds.io/images/backgrounds/white/white-canyon-6c5d2a4c.jpg";
 
 const MyPage = () => {
-  const [movies, setMovies] = React.useState([]); //movies is an array of objects, each object is a movie
+  const [movies, setMovies] = React.useState([]); 
   const [movieID, setMovieID] = React.useState(0);
-  const [selectedMovie, setSelectedMovie] = React.useState(""); //selectedMovie is an object, the selected movie
+  const [selectedMovie, setSelectedMovie] = React.useState(""); 
   const [videoURL, setVideoURL] = React.useState("");
   const [trailerURL, setTrailerURL] = React.useState("");
   const [hasTrailer, setHasTrailer] = React.useState(false);
@@ -26,13 +31,9 @@ const MyPage = () => {
     setTrailerURL(event.target.value);
   };
 
-  React.useEffect(
-    () => {
-      getMovies();
-    },
-    [],
-    [buttonClicked]
-  );
+  React.useEffect(() => {
+    getMovies();
+  }, []);
 
   const getMovies = () => {
     callApiGetMovies(serverURL).then((res) => {
@@ -77,65 +78,84 @@ const MyPage = () => {
   return (
     <Box
       sx={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#CED4DA",
+        p: 4,
       }}
     >
-      {/* Center the content vertically and horizontally */}
-
-      {/* Embed the YouTube video player */}
-      {hasTrailer ? (
-        <Box my={2}>
-          <Typography variant="h4">Watch a movie trailer!</Typography>
-          <MovieDropdown
-            movies={movies}
-            selectedMovie={selectedMovie}
-            handleSelectionChange={handleSelectionChange}
-          />
-          <Box my={2}>
-            <iframe
-              width="600"
-              height="400"
-              src={videoURL}
-              title={movieID}
-              allowFullScreen
-            ></iframe>
-          </Box>
+      <Container
+        maxWidth="md"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: "#CED4DA",
+            p: 4,
+            borderRadius: 4,
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            textAlign: "center", 
+          }}
+        >
+          {hasTrailer ? (
+            <>
+              <Typography variant="h4" sx={{ my: 2 }}>
+                Watch a movie trailer!
+              </Typography>
+              <MovieDropdown
+                movies={movies}
+                selectedMovie={selectedMovie}
+                handleSelectionChange={handleSelectionChange}
+              />
+              <Box sx={{ my: 2 }}>
+                <iframe
+                  width="600"
+                  height="400"
+                  src={videoURL}
+                  title={movieID}
+                  allowFullScreen
+                ></iframe>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Typography variant="h4" sx={{ my: 2 }}>
+                Enter a movie trailer!
+              </Typography>
+              <MovieDropdown
+                movies={movies}
+                selectedMovie={selectedMovie}
+                handleSelectionChange={handleSelectionChange}
+              />
+              <Box sx={{ my: 2 }}>
+                <InsertTrailer
+                  trailerURL={trailerURL}
+                  handleTrailerChange={handleTrailerChange}
+                />
+              </Box>
+              <Box sx={{ my: 2 }}>
+                <Button
+                  variant="contained"
+                  onClick={handleButtonClick}
+                  style={{ backgroundColor: "#212529" }}
+                >
+                  Submit
+                </Button>
+              </Box>
+            </>
+          )}
         </Box>
-      ) : (
-        <Box my={2}>
-          <Typography variant="h4">Enter a movie trailer!</Typography>
-          <MovieDropdown
-            movies={movies}
-            selectedMovie={selectedMovie}
-            handleSelectionChange={handleSelectionChange}
-          />
-          <Box my={2}>
-            <InsertTrailer
-              trailerURL={trailerURL}
-              handleTrailerChange={handleTrailerChange}
-            />
-          </Box>
-          <Box my={2}>
-            <Button
-              variant="contained"
-              onClick={handleButtonClick}
-              style={{
-                backgroundColor: "#212529",
-              }}
-            >
-              Submit
-            </Button>
-            <Typography variant="h6" color="green">
-               Your trailer submission has been received!  
-            </Typography>
-          </Box>
-        </Box>
-      )}
+      </Container>
     </Box>
   );
 };
