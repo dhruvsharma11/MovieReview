@@ -1,10 +1,8 @@
 import * as React from "react";
-//import all necessary libraries here, e.g., Material-UI Typography, as follows
 import { Select, MenuItem, Box, FormControl, InputLabel } from "@mui/material";
 
 const MovieSelection = (props) => {
-  //states declarations
-  //constants and functions declarations
+
   const initialMovies = props.movies.map((movie) => movie.name);
 
   return (
